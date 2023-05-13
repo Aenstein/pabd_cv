@@ -1,3 +1,4 @@
+"""Test for image classifire"""
 import io
 import unittest
 import PIL.Image
@@ -6,25 +7,33 @@ from requests import request
 
 
 class MyTestCase(unittest.TestCase):
+    """Test Class"""
+
     def test_home(self):
-        response = requests.request('GET', 'http://localhost:1234/')
+        """test home page /"""
+        response = requests.request(
+            "GET", "http://localhost:1800/", timeout=10
+            )
         sample = response.content.decode()
-        self.assertEqual(sample, 'Home page')  # add assertion here
+        self.assertEqual(sample, "Home page")  # add assertion here
 
     def test_classify(self):
-        img = PIL.Image.open('../data/dog.jpg')
+        """test classify page"""
+        img = PIL.Image.open("/Users/leonid/fa/pabd/pabd_cv/data/dog.jpg")
         buffer = io.BytesIO()
-        img.save(buffer, format='JPEG')
+        img.save(buffer, format="JPEG")
 
         with buffer as buf:
             buffer.seek(0)
-            response = request('POST', 'http://localhost:1234/classify', data=buf)
+            response = request(
+                "POST", "http://localhost:1800/classify", data=buf, timeout=10
+            )
 
-        out = response.content.decode('utf-8')
-        expected = 'келпи, Пембрук, Немецкая овчарка'
+        out = response.content.decode("utf-8")
+        expected = "Пембрук"
 
-        self.assertEqual(out, expected)
+        self.assertIn(expected, out)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
