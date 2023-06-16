@@ -29,7 +29,7 @@ def process_data(in_dir, out_dir, n_img, img_size):
 def make_out_dir(out_dir):
     """Make dir"""
     if os.path.exists(out_dir):
-        os.remove(out_dir)
+        os.rmdir(out_dir)
     os.mkdir(out_dir)
     os.mkdir(os.path.join(out_dir, "cat"))
     os.mkdir(os.path.join(out_dir, "dog"))
