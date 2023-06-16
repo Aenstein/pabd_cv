@@ -45,7 +45,7 @@ class MyTestCase(unittest.TestCase):
             )
 
         out = response.content.decode("utf-8")
-        print(out)
+        # print(out)
         expected = "Cat"
         self.assertEqual(expected, out)
 
